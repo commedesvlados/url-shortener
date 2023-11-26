@@ -1,0 +1,24 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+# Datasource local storage ignored files
+/dataSources/
+/dataSources.local.xml
+
+.idea
+.bin
+
+# Environment variables
+.env
+.env.local
+.env.test.local
+.env.development
+.env.development.test
+.env.development.local
+.env.development.local.test
+.env.production
+.env.production.test
+.env.production.local
+.env.production.test.local
