@@ -24,10 +24,11 @@
 .env.production.test.local
 
 #
-
 storage/storage.db
-
 
 #
 docker-compose.yaml
 docker-compose.local.yaml
+
+# Github
+.github/workflows/deploy.yaml
