@@ -36,6 +36,13 @@ type Envs struct {
 		User        string        `env:"USER" env-required:"true"`
 		Password    string        `env:"PASSWORD" env-required:"true"`
 	} `env-prefix:"SERVER_"`
+	AuthClient struct {
+		Address      string        `env:"ADDRESS" env-required:"true"`
+		Timeout      time.Duration `env:"TIMEOUT" env-required:"true"`
+		RetriesCount int           `env:"RETRIES_COUNT" env-required:"true"`
+		Insecure     bool          `env:"INSECURE" env-required:"true"`
+	} `env-prefix:"AUTH_CLIENT_"`
+	AppSecret string `env:"APP_SECRET" env-required:"true"`
 }
 
 var E *Envs

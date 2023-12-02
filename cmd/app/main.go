@@ -1,9 +1,12 @@
 package main
 
 import (
+	"context"
 	"log/slog"
 	"net/http"
 	"os"
+
+	authgrpc "github.com/commedesvlados/url-shortener/internal/clients/auth/grpc"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
@@ -23,8 +26,31 @@ func main() {
 
 	log := setupLogger(config.C.Env)
 
-	log.Info("[App] Application started", slog.String("env", config.C.Env), slog.String("version", "1.0"))
+	log.Info("[App] Application started",
+		slog.String("env", config.C.Env), slog.String("version", "1.0"))
 	log.Debug("debug are enabled")
+
+	authClient, err := authgrpc.New(
+		context.Background(),
+		log,
+		config.E.AuthClient.Address,
+		config.E.AuthClient.Timeout,
+		config.E.AuthClient.RetriesCount,
+	)
+	if err != nil {
+		log.Error("failed connect to auth client", sl.Err(err))
+		os.Exit(1)
+	}
+
+	log.Info("[App] Connected to grpc auth service",
+		slog.String("addr", config.E.AuthClient.Address))
+
+	// TODO rm
+	isAdmin, err := authClient.IsAdmin(context.Background(), 1)
+	if err != nil {
+		log.Error("failed to check if user is admin", sl.Err(err))
+	}
+	log.Info("checking if user is admin", slog.Bool("isAdmin", isAdmin))
 
 	storage, err := sqlite.New(config.E.Database.Path)
 	if err != nil {
