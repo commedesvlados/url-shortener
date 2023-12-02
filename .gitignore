@@ -31,4 +31,6 @@ docker-compose.yaml
 docker-compose.local.yaml
 
 # Github
+.github/
+.github/workflows/
 .github/workflows/deploy.yaml
